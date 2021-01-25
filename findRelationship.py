@@ -29,7 +29,8 @@ league_data_df = pd.read_csv(dataPath)
 # scipy.stats.linregress(df1[['bins', 'one']].to_numpy()).rvalue ** 2
 # above is example code from SO
 
-print((scipy.stats.linregress
-       (league_data_df[['W', 'points']].to_numpy()).rvalue ** 2))
+decimals = 2
+print(round((scipy.stats.linregress
+       (league_data_df[['W', 'points']].to_numpy()).rvalue ** 2),2))
 
 print(datetime.now()-startTime)
