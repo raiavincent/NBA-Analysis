@@ -198,7 +198,7 @@ league_df = league_df.reset_index(drop=True)
 print('Dataframe created.')
 
 print('Saving dataframe to csv.')
-os.chdir(r'C:\Users\Vincent\Documents\GitHub\Basketball-Analysis\Excel Sheetss')
+os.chdir(r'C:\Users\Vincent\Documents\GitHub\Basketball-Analysis\Excel Sheets')
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
 league_df.to_csv('Team Stats ' + dateString + '.csv',index=False)
 print('Saved to csv. Script complete.')
