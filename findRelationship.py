@@ -46,4 +46,6 @@ realCorr = (league_numbers_df[league_numbers_df.columns[0:]].apply
             (lambda x: x.corr(league_numbers_df['W'])))
 realCorr = (realCorr.sort_values(ascending=False))
 
+series = pd.Series(data=league_numbers_df)
+
 print(datetime.now()-startTime)
