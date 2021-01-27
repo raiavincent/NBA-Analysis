@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 import scipy.stats
+from sklearn.metrics import r2_score
 
 startTime = datetime.now()
 
