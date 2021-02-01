@@ -5,10 +5,9 @@
 # do I have to make a whole ass dataframe then do the math?
 
 import pandas as pd
-import numpy as np
 from datetime import datetime
 import scipy.stats
-from sklearn.metrics import r2_score
+from variable import r2
 
 startTime = datetime.now()
 
@@ -24,8 +23,7 @@ dataPath = (r'C:\Users\Vincent\Documents\GitHub'
 # get the data
 league_data_df = pd.read_csv(dataPath)
 
-# drop descriptive data
-league_numbers_df = league_data_df.drop(['name','abbreviation'],axis=1)
+league_data_df = league_data_df[r2]
 
 # I think I want to drop 'string' formatted data to make it easier to 
 # complete the necessary math, but we can worry about that later, see how it
@@ -38,14 +36,38 @@ decimals = 2
 print(round((scipy.stats.linregress
        (league_data_df[['W', 'points']].to_numpy()).rvalue ** 2),2))
 
+
 # https://stackoverflow.com/questions/34896455/how-to-do-pearson-correlation
 # -of-selected-columns-of-a-pandas-data-frame
 # should be able to use the same thing for r2
 
-realCorr = (league_numbers_df[league_numbers_df.columns[0:]].apply
-            (lambda x: x.corr(league_numbers_df['W'])))
-realCorr = (realCorr.sort_values(ascending=False))
+# realCorr = (league_numbers_df[league_numbers_df.columns[0:]].apply
+#             (lambda x: x.corr(league_numbers_df['W'])))
+# realCorr = (realCorr.sort_values(ascending=False))
 
-series = pd.Series(data=league_numbers_df)
+# series = pd.Series(data=league_data_df)
+
+# https://stackoverflow.com/questions/60124004/creating-dataframe-on-the-basis-of-r-squared-value
+
+# df2 = pd.DataFrame({
+#     'columns': df1.columns[1:],
+#     'r-square_with_bins': [
+#         scipy.stats.linregress(df1[['bins', col]].to_numpy()).rvalue ** 2
+#         for col in df1.columns[1:]
+#     ]
+# })
+
+for col in league_data_df.columns[4:]:
+    r2_df = pd.DataFrame()
+    r2 = scipy.stats.linregress(league_data_df[['W', col]].to_numpy()).rvalue ** 2
+    print(col + ' ' + ' ' + str(r2))
+
+# r2_df = pd.DataFrame({
+#     'columns': league_data_df.columns[4:],
+#     'r-square_with_W': [
+#         scipy.stats.linregress(league_data_df[['W', col]].to_numpy()).rvalue ** 2
+#         for col in league_data_df.columns[1:]
+#     ]
+# })
 
 print(datetime.now()-startTime)

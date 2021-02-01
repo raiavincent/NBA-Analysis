@@ -4,6 +4,7 @@ import pandas as pd
 from basketball_reference_scraper.teams import get_team_misc
 from datetime import datetime
 import os
+from variable import dataframe_order
 
 startTime = datetime.now()
 
@@ -113,84 +114,14 @@ league_df['2pt FG Att Diff'] = (league_df['two_point_field_goal_attempts'] -
                                 league_df['opp_two_point_field_goal_attempts'])
 league_df['2pt FG Diff'] = (league_df['two_point_field_goals'] - 
                                 league_df['opp_two_point_field_goals'])
+league_df.loc['mean'] = league_df.mean(axis=0)
+league_df['name'].fillna('Mean', inplace = True)
+league_df['abbreviation'].fillna('AVG', inplace = True)
 
 print('DONE: Calculated differentials.')
 
 # consider dropping rank from this list, as it is only based off points
-league_df = league_df[['name',
-        'abbreviation',
-        'rank',
-        'EWP',
-        'W',
-        'L',
-        'GP',
-        'PW',
-        'PL',
-        'Ahead/Behind',
-        'PW Season',
-        'PL Season',
-        'points',
-        'opp_points',
-        'Point Diff',
-        'assists', 
-        'opp_assists', 
-        'Assist Diff',
-        'blocks',
-        'opp_blocks',
-        'Block Diff',
-        'defensive_rebounds',
-        'opp_defensive_rebounds',
-        'Def Reb Diff',
-        'field_goal_attempts', 
-        'opp_field_goal_attempts',
-        'FG Att Diff',
-        'field_goal_percentage', 
-        'field_goals',
-        'opp_field_goals',
-        'FG Diff',
-        'free_throw_attempts',
-        'opp_free_throw_attempts',
-        'FT Att Diff',
-        'free_throw_percentage', 
-        'free_throws',
-        'opp_free_throws',
-        'FT Diff',
-        'games_played', 
-        'minutes_played', 
-        'offensive_rebounds',
-        'opp_offensive_rebounds',
-        'Off Reb Diff',
-        'opp_field_goal_percentage',
-        'opp_free_throw_percentage',
-        'personal_fouls',
-        'opp_personal_fouls',
-        'Personal Foul Diff',
-        'steals',
-        'opp_steals', 
-        'Steal Diff',
-        'three_point_field_goal_attempts',
-        'opp_three_point_field_goal_attempts',
-        '3pt Att Diff',
-        'opp_three_point_field_goal_percentage', 
-        'three_point_field_goals',
-        'opp_three_point_field_goals',
-        '3pt FG Diff',
-        'total_rebounds',
-        'opp_total_rebounds', 
-        'Rebound Diff',
-        'turnovers',
-        'opp_turnovers',
-        'Turnover Diff',
-        'two_point_field_goal_attempts',
-        'opp_two_point_field_goal_attempts',
-        '2pt FG Att Diff',
-        'two_point_field_goals',
-        'opp_two_point_field_goals',
-        '2pt FG Diff',
-        'opp_two_point_field_goal_percentage',
-        'three_point_field_goal_percentage',
-        'two_point_field_goal_percentage',
-        ]]
+league_df = league_df[dataframe_order]
 
 league_df = league_df.sort_values(['EWP'],ascending=False)
 league_df = league_df.reset_index(drop=True)
@@ -199,6 +130,7 @@ print('Dataframe created.')
 
 print('Saving dataframe to csv.')
 os.chdir(r'C:\Users\Vincent\Documents\GitHub\Basketball-Analysis\Excel Sheets')
+# os.chdir(r'/home/pi/Documents/Basketball-Analysis/Excel Sheets')
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
 league_df.to_csv('Team Stats ' + dateString + '.csv',index=False)
 print('Saved to csv. Script complete.')

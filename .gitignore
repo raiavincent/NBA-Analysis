@@ -1,0 +1,10 @@
+
+client_secrets.json
+Excel Sheets/mycreds.txt
+Excel Sheets/config.py
+Excel Sheets/quickstart.py
+Excel Sheets/settings.yaml.txt
+Excel Sheets/__pycache__/config.cpython-38.pyc
+quickstart.py
+*.csv
+__pycache__/variable.cpython-38.pyc
