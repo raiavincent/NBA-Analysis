@@ -34,7 +34,7 @@ league_data_df = league_data_df[r2]
 
 decimals = 2
 print(round((scipy.stats.linregress
-       (league_data_df[['W', 'points']].to_numpy()).rvalue ** 2),2))
+       (league_data_df[['W', 'points']].to_numpy()).rvalue ** 2),decimals))
 
 
 # https://stackoverflow.com/questions/34896455/how-to-do-pearson-correlation
@@ -57,10 +57,19 @@ print(round((scipy.stats.linregress
 #     ]
 # })
 
-for col in league_data_df.columns[4:]:
-    r2_df = pd.DataFrame()
-    r2 = scipy.stats.linregress(league_data_df[['W', col]].to_numpy()).rvalue ** 2
+r2_df_dict = {}
+
+for col in league_data_df.columns[3:]:
+    r2 = round((scipy.stats.linregress(league_data_df[['W', col]].to_numpy()).rvalue ** 2),decimals)
     print(col + ' ' + ' ' + str(r2))
+    if col not in r2_df_dict.keys():
+        r2_df_dict[col] = r2
+
+r2_df = pd.DataFrame()
+r2_df = r2_df.append(r2_df_dict, ignore_index=True)
+r2_df = r2_df.transpose()
+r2_df = r2_df.rename(columns={0:'W'})
+r2_df =r2_df.sort_values('W',ascending=False)
 
 # r2_df = pd.DataFrame({
 #     'columns': league_data_df.columns[4:],
