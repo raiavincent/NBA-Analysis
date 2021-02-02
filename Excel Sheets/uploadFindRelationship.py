@@ -1,7 +1,7 @@
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from datetime import datetime
-from config import folder
+from config import findRelationship
 
 gauth = GoogleAuth()
 
@@ -36,8 +36,8 @@ drive = GoogleDrive(gauth)
 
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
 
-todayFile = ('Team Stats ' + dateString + '.csv')
+todayFile = ('R2 Measurements ' + dateString + '.csv')
 # DONE: the folder ID should be added from a config file
-file = drive.CreateFile({'parents': [{'id': folder}]})
+file = drive.CreateFile({'parents': [{'id': findRelationship}]})
 file.SetContentFile(todayFile)
 file.Upload()

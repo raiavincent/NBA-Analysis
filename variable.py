@@ -73,7 +73,7 @@ dataframe_order = ['name',
         'two_point_field_goal_percentage'
         ]
 
-r2 = ['name',
+r2List = ['name',
         'abbreviation',
         'rank',
         'W',

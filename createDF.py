@@ -63,8 +63,8 @@ decimals = 0
 
 print('Calculating EWP.')
 
-league_df['EWP'] = ((league_df['points']**exponent)/
-((league_df['points']**exponent)+(league_df['opp_points']**exponent)))
+league_df['EWP'] = round(((league_df['points']**exponent)/
+((league_df['points']**exponent)+(league_df['opp_points']**exponent))),2)
 
 # DONE: Figure out how to round these.
 
