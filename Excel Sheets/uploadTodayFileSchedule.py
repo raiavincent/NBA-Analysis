@@ -1,7 +1,7 @@
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from datetime import datetime
-from config import folder
+from getFolderID import monthFolder
 import schedule
 import time
 
@@ -44,7 +44,7 @@ def uploadCSVToday():
     
     todayFile = ('Team Stats ' + dateString + '.csv')
     # DONE: the folder ID should be added from a config file
-    file = drive.CreateFile({'parents': [{'id': folder}]})
+    file = drive.CreateFile({'parents': [{'id': monthFolder}]})
     file.SetContentFile(todayFile)
     file.Upload()
     
