@@ -99,10 +99,6 @@ for year in years:
                 players_collected.append(player_id)
                 print(player.name)
 
-# condition = season_df[season_df['year'] != '2021'].index 
-    
-# season_df = season_df.drop(season_df['year'] != '2021'.index , inplace = True) 
-
 season2021 = season_df[season_df['year'] == '2021']
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
 season2021.to_csv(f'2021 Season Stats as of {dateString}.csv')
