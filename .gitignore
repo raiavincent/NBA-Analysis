@@ -11,3 +11,4 @@ __pycache__/variable.cpython-38.pyc
 Excel Sheets/getFolderID.py
 Excel Sheets/getFolderIDSchedule.py
 test.py
+Player Data/getFolderIDPlayer.py

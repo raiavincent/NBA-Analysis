@@ -9,6 +9,7 @@ from datetime import datetime
 import scipy.stats
 from variable import r2List
 import os
+import numpy as np
 
 startTime = datetime.now()
 
@@ -34,12 +35,23 @@ r2_df_dict = {}
 
 decimals = 2
 
+# for col in league_data_df.columns[3:]:
+#     r2 = round((scipy.stats.linregress(league_data_df[['W', col]].to_numpy())
+#                 .rvalue ** 2),decimals)
+#     print(col + ' ' + ' ' + str(r2))
+#     if col not in r2_df_dict.keys():
+#         r2_df_dict[col] = r2
+
+
+
 for col in league_data_df.columns[3:]:
-    r2 = round((scipy.stats.linregress(league_data_df[['W', col]].to_numpy())
-                .rvalue ** 2),decimals)
+    correlation_matrix = np.corrcoef(league_data_df['W'],col)
+    correlation_xy = correlation_matrix[0,1]
+    r2 = correlation_xy**2
     print(col + ' ' + ' ' + str(r2))
     if col not in r2_df_dict.keys():
         r2_df_dict[col] = r2
+
 print('DONE: r2 calculated and printed.')
 
 # DONE: set index so statistic shows in row
