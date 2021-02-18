@@ -124,7 +124,10 @@ nameTeamDf = nameTeamDf.sort_values(by='PLAYER',ascending=True)
 season_df = season_df.loc[:,~season_df.columns.duplicated()]
 season2021 = season2021.loc[:,~season2021.columns.duplicated()]
 
-season2021['team_abbreviation'] = nameTeamDf['Team']
+# https://www.geeksforgeeks.org/adding-new-column-to-existing-dataframe-in-pandas/
+# next idea: df['Column'] = list of abbr, need to get Team column as list
+# or try df.insert, first get list of abbreviations as the list
+# of data to add
 
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
 season2021.to_csv(f'2021 Season Stats as of {dateString}.csv')
