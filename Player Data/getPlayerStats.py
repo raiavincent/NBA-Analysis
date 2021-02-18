@@ -4,6 +4,8 @@ from sportsipy.nba.roster import Player
 from sportsipy.nba.roster import Roster
 from datetime import datetime
 import pandas as pd
+from playerDataCols import cols
+from basketball_reference_scraper.teams import get_roster
 
 startTime = datetime.now()
 
@@ -27,10 +29,6 @@ def get_player_df(player):
     player_df['name'] = player.name # name field gets player name
     player_df['year'] = [get_year(ix) for ix in player_df.index] # year field 
     # gets the year of each season pulled
-    #player_df['id'] = [player_id + ' ' + year for player_id, # comment out as 
-    # I do not want this atm
-     #                  year in zip(player_df['player_id'],
-      #                 player_df['year'])]
     player_df.set_index('player_id', drop = True, inplace = True) 
     # this was 'id' before but i dont want id
     
@@ -100,6 +98,33 @@ for year in years:
                 print(player.name)
 
 season2021 = season_df[season_df['year'] == '2021']
+season2021 = season2021.drop(columns=['team_abbreviation'])
+
+# place code to create DF for current team abbreviations, order the dataframes
+# to add to each other more simply
+
+season2021 = season2021.sort_values(by='name',ascending=True)
+
+teams = Teams(year='2021')
+
+abbr_list = []
+for team in teams:
+   abbr_list.append(team.abbreviation)
+
+nameTeamDf = pd.DataFrame()
+
+for abbr in abbr_list:
+    nextTeamDf = pd.DataFrame(data=get_roster(abbr,'2021'))
+    nextTeamDf['Team'] = abbr
+    nameTeamDf = nameTeamDf.append(nextTeamDf)
+
+nameTeamDf = nameTeamDf.sort_values(by='PLAYER',ascending=True)
+
+season_df = season_df[cols]
+season_df = season_df.loc[:,~season_df.columns.duplicated()]
+
+season2021 = season2021.loc[:,~season2021.columns.duplicated()]
+
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
 season2021.to_csv(f'2021 Season Stats as of {dateString}.csv')
 
