@@ -97,6 +97,7 @@ for year in years:
                 players_collected.append(player_id)
                 print(player.name)
 
+season_df = season_df[cols]
 season2021 = season_df[season_df['year'] == '2021']
 season2021 = season2021.drop(columns=['team_abbreviation'])
 
@@ -120,10 +121,10 @@ for abbr in abbr_list:
 
 nameTeamDf = nameTeamDf.sort_values(by='PLAYER',ascending=True)
 
-season_df = season_df[cols]
 season_df = season_df.loc[:,~season_df.columns.duplicated()]
-
 season2021 = season2021.loc[:,~season2021.columns.duplicated()]
+
+season2021['team_abbreviation'] = nameTeamDf['Team']
 
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
 season2021.to_csv(f'2021 Season Stats as of {dateString}.csv')
