@@ -6,6 +6,7 @@ from datetime import datetime
 import pandas as pd
 from playerDataCols import cols
 from basketball_reference_scraper.teams import get_roster
+from nba_api.stats.endpoints import playercareerstats
 
 startTime = datetime.now()
 
@@ -99,7 +100,6 @@ for year in years:
 
 season_df = season_df[cols]
 season2021 = season_df[season_df['year'] == '2021']
-season2021 = season2021.drop(columns=['team_abbreviation'])
 
 # place code to create DF for current team abbreviations, order the dataframes
 # to add to each other more simply
@@ -121,6 +121,8 @@ for abbr in abbr_list:
 
 nameTeamDf = nameTeamDf.sort_values(by='PLAYER',ascending=True)
 
+abbrList = nameTeamDf['Team'].tolist()
+
 season_df = season_df.loc[:,~season_df.columns.duplicated()]
 season2021 = season2021.loc[:,~season2021.columns.duplicated()]
 
@@ -128,6 +130,8 @@ season2021 = season2021.loc[:,~season2021.columns.duplicated()]
 # next idea: df['Column'] = list of abbr, need to get Team column as list
 # or try df.insert, first get list of abbreviations as the list
 # of data to add
+
+
 
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
 season2021.to_csv(f'2021 Season Stats as of {dateString}.csv')
