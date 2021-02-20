@@ -1,12 +1,10 @@
 from sportsipy.nba.teams import Teams
-from sportsipy.nba.teams import Team
 from sportsipy.nba.roster import Player
 from sportsipy.nba.roster import Roster
 from datetime import datetime
 import pandas as pd
 from playerDataCols import cols
 from basketball_reference_scraper.teams import get_roster
-from nba_api.stats.endpoints import playercareerstats
 
 startTime = datetime.now()
 
@@ -26,7 +24,8 @@ def get_player_df(player):
     
     # get player df and add some extra info
     player_df = player.dataframe # establish dataframe
-    player_df['player_id'] = player.player_id # player_id field is populated with player_id
+    player_df['player_id'] = player.player_id # player_id field is populated 
+    # with player_id
     player_df['name'] = player.name # name field gets player name
     player_df['year'] = [get_year(ix) for ix in player_df.index] # year field 
     # gets the year of each season pulled
@@ -130,8 +129,6 @@ season2021 = season2021.loc[:,~season2021.columns.duplicated()]
 # next idea: df['Column'] = list of abbr, need to get Team column as list
 # or try df.insert, first get list of abbreviations as the list
 # of data to add
-
-
 
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
 season2021.to_csv(f'2021 Season Stats as of {dateString}.csv')
