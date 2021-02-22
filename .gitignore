@@ -13,3 +13,7 @@ Excel Sheets/getFolderIDSchedule.py
 test.py
 Player Data/getFolderIDPlayer.py
 Player Data/mycreds.txt
+Player Data/Career/getFolderIDCareer.py
+Player Data/Career/getFolderIDCareerSchedule.py
+Player Data/Season/mycreds.txt
+Player Data/Season/getFolderIDPlayerSchedule.py

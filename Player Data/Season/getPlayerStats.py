@@ -4,7 +4,7 @@ from sportsipy.nba.roster import Roster
 from datetime import datetime
 import pandas as pd
 from playerDataCols import cols
-from basketball_reference_scraper.teams import get_roster
+import os
 
 startTime = datetime.now()
 
@@ -99,38 +99,16 @@ for year in years:
 
 season_df = season_df[cols]
 season2021 = season_df[season_df['year'] == '2021']
-
-# place code to create DF for current team abbreviations, order the dataframes
-# to add to each other more simply
-
 season2021 = season2021.sort_values(by='name',ascending=True)
-
-teams = Teams(year='2021')
-
-abbr_list = []
-for team in teams:
-   abbr_list.append(team.abbreviation)
-
-nameTeamDf = pd.DataFrame()
-
-for abbr in abbr_list:
-    nextTeamDf = pd.DataFrame(data=get_roster(abbr,'2021'))
-    nextTeamDf['Team'] = abbr
-    nameTeamDf = nameTeamDf.append(nextTeamDf)
-
-nameTeamDf = nameTeamDf.sort_values(by='PLAYER',ascending=True)
-
-abbrList = nameTeamDf['Team'].tolist()
 
 season_df = season_df.loc[:,~season_df.columns.duplicated()]
 season2021 = season2021.loc[:,~season2021.columns.duplicated()]
-
-# https://www.geeksforgeeks.org/adding-new-column-to-existing-dataframe-in-pandas/
-# next idea: df['Column'] = list of abbr, need to get Team column as list
-# or try df.insert, first get list of abbreviations as the list
-# of data to add
+season2021 = season2021.loc[:, (season2021 != 0).any(axis=0)]
 
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
+
+career_df.to_csv(f'Active Player Career Stats as of {dateString}.csv')
+os.chdir(r'C:\Users\Vincent\Documents\GitHub\Basketball-Analysis\Player Data\Career')
 season2021.to_csv(f'2021 Season Stats as of {dateString}.csv')
 
 print(datetime.now()-startTime)

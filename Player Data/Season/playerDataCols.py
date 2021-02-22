@@ -1,4 +1,4 @@
-cols = ['name','year','and_ones','team_abbreviation','assist_percentage', 
+cols = ['name','year','team_abbreviation','and_ones','assist_percentage', 
         'assists', 'assists_per_poss', 
         'block_percentage', 'blocking_fouls', 'blocks', 'blocks_per_poss', 
         'box_plus_minus', 'center_percentage', 'defensive_box_plus_minus', 
