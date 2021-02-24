@@ -107,8 +107,8 @@ season2021 = season2021.loc[:, (season2021 != 0).any(axis=0)]
 
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
 
-career_df.to_csv(f'Active Player Career Stats as of {dateString}.csv')
-os.chdir(r'C:\Users\Vincent\Documents\GitHub\Basketball-Analysis\Player Data\Career')
 season2021.to_csv(f'2021 Season Stats as of {dateString}.csv')
+os.chdir(r'C:\Users\Vincent\Documents\GitHub\Basketball-Analysis\Player Data\Career')
+career_df.to_csv(f'Active Player Career Stats as of {dateString}.csv')
 
 print(datetime.now()-startTime)

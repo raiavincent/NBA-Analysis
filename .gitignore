@@ -17,3 +17,7 @@ Player Data/Career/getFolderIDCareer.py
 Player Data/Career/getFolderIDCareerSchedule.py
 Player Data/Season/mycreds.txt
 Player Data/Season/getFolderIDPlayerSchedule.py
+masterFileUpload.py
+mycreds.txt
+masterFileUploadSchedulePi.py
+masterFileUploadSchedule.py
