@@ -59,38 +59,26 @@ sundayFolderPlayerSeason = 'folderID'
 sundayFolderPlayerCareer = 'folderID'
 
 # these next 3 if statements match the current month with the right folder ID
-# TODO: wrap these all into one if statement, works fine but would be better
+# DONE: wrap these all into one if statement, works fine but would be better
 if currentMonth == 'january':
     monthFolderTeam = 'folderID'
-elif currentMonth == 'february':
-    monthFolderTeam = 'folderID-'
-elif currentMonth == 'march':
-    monthFolderTeam = 'folderID'
-elif currentMonth == 'april':
-    monthFolderTeam = 'folderID'
-elif currentMonth == 'may':
-    monthFolderTeam = 'folderID'
-    
-if currentMonth == 'january':
     monthFolderPlayerSeason = 'folderID'
-elif currentMonth == 'february':
-    monthFolderPlayerSeason = 'folderID'
-elif currentMonth == 'march':
-    monthFolderPlayerSeason = 'folderID'
-elif currentMonth == 'april':
-    monthFolderPlayerSeason = 'folderID'
-elif currentMonth == 'may':
-    monthFolderPlayerSeason = 'folderID'
-    
-if currentMonth == 'january':
     monthFolderPlayerCareer = 'folderID'
 elif currentMonth == 'february':
+    monthFolderTeam = 'folderID'
+    monthFolderPlayerSeason = 'folderID'
     monthFolderPlayerCareer = 'folderID'
 elif currentMonth == 'march':
+    monthFolderTeam = 'folderID'
+    monthFolderPlayerSeason = 'folderID'
     monthFolderPlayerCareer = 'folderID'
 elif currentMonth == 'april':
+    monthFolderTeam = 'folderID'
+    monthFolderPlayerSeason = 'folderID'
     monthFolderPlayerCareer = 'folderID'
 elif currentMonth == 'may':
+    monthFolderTeam = 'folderID'
+    monthFolderPlayerSeason = 'folderID'
     monthFolderPlayerCareer = 'folderID'
 
 # using the os module to change the directory for the right file
