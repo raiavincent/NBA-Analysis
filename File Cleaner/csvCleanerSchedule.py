@@ -2,7 +2,7 @@ import os
 import sys
 import schedule
 import time
-import datetime
+from datetime import date
 
 print('Running fileCleaner.py')
 
