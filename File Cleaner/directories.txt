@@ -1,0 +1,5 @@
+(r'/home/pi/Documents/Basketball-Analysis')
+(r'/home/pi/Documents/Basketball-Analysis/Player Data')
+(r'/home/pi/Documents/Basketball-Analysis/Player Data/Career')
+(r'/home/pi/Documents/Basketball-Analysis/Player Data/Season')
+(r'/home/pi/Documents/Basketball-Analysis/Excel Sheets')
