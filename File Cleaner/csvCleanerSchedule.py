@@ -2,6 +2,9 @@ import os
 import sys
 import schedule
 import time
+import datetime
+
+print('Running fileCleaner.py')
 
 def fileCleaner():
     os.chdir(r'/home/pi/Documents/Basketball-Analysis/File Cleaner')
@@ -24,6 +27,8 @@ def fileCleaner():
         for file in csvFiles:
             path_to_file = os.path.join(directory, file)
             os.remove(path_to_file)
+    today = date.today()
+    print('CSV files cleaned out. ' + today.strftime("%m-%d-%y"))
 
 schedule.every().sunday.at("12:00").do(fileCleaner)
 
