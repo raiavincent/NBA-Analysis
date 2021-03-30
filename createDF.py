@@ -3,8 +3,9 @@ from sportsipy.nba.teams import Team
 import pandas as pd
 from basketball_reference_scraper.teams import get_team_misc
 from datetime import datetime
-import os
 from variable import dataframe_order
+import gspread
+from nbaSecrets import nbaTeamFolderId, teamDashboardURL
 
 startTime = datetime.now()
 
@@ -114,8 +115,6 @@ league_df['2pt FG Att Diff'] = (league_df['two_point_field_goal_attempts'] -
                                 league_df['opp_two_point_field_goal_attempts'])
 league_df['2pt FG Diff'] = (league_df['two_point_field_goals'] - 
                                 league_df['opp_two_point_field_goals'])
-league_df.loc['mean'] = league_df.mean(axis=0)
-league_df['name'].fillna('Mean', inplace = True)
 league_df['abbreviation'].fillna('AVG', inplace = True)
 
 print('DONE: Calculated differentials.')
@@ -128,11 +127,38 @@ league_df = league_df.reset_index(drop=True)
 
 print('Dataframe created.')
 
-print('Saving dataframe to csv.')
-os.chdir(r'C:\Users\Vincent\Documents\GitHub\Basketball-Analysis\Excel Sheets')
-# os.chdir(r'/home/pi/Documents/Basketball-Analysis/Excel Sheets')
+# gc authorizes and lets us access the spreadsheets
+gc = gspread.oauth()
 dateString = datetime.strftime(datetime.now(), '%Y_%m_%d')
-league_df.to_csv('Team Stats ' + dateString + '.csv',index=False)
-print('Saved to csv. Script complete.')
+
+# create the workbook where the day's data will go
+# add in folder_id to place it in the folder we want
+sh = gc.create(f'NBA Team Data as of {dateString}',folder_id=nbaTeamFolderId)
+
+# access the first sheet of that newly created workbook
+worksheet = sh.get_worksheet(0)
+
+# edit the worksheet with the created dataframe for the day's data
+worksheet.update([league_df.columns.values.tolist()] + league_df.values.tolist())
+
+# open the main workbook with that workbook's url
+db = gc.open_by_url(teamDashboardURL)
+
+# changed this over to the second sheet so the dashboard can be the first sheet
+# dbws is the database worksheet, as in the main workbook that is updated and
+# used to analyze and pick from
+dbws = db.get_worksheet(1)
+
+# below clears the stock sheet so it can be overwritten with updates
+# z1000 is probably overkill but would rather over kill than underkill
+range_of_cells = dbws.range('A1:Z1000')
+for cell in range_of_cells:
+    cell.value = ''
+dbws.update_cells(range_of_cells)
+
+# update the spreadsheet in the database workbook with the df
+dbws.update([league_df.columns.values.tolist()] + league_df.values.tolist())
+
+print('Sheets updated and created. Script complete.')
 
 print(datetime.now()-startTime)
