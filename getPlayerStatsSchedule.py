@@ -3,7 +3,7 @@ from sportsipy.nba.roster import Player
 from sportsipy.nba.roster import Roster
 from datetime import datetime
 import pandas as pd
-from playerDataCols import cols
+from playerDataCols import cols, careerCols
 import time
 import schedule
 import gspread
@@ -36,6 +36,9 @@ def getStats():
         player_df['name'] = player.name # name field gets player name
         player_df['year'] = [get_year(ix) for ix in player_df.index] # year field 
         # gets the year of each season pulled
+        player_df['id'] = [player_id + ' ' + year for player_id,
+               year in zip(player_df['player_id'],
+               player_df['year'])]
         player_df.set_index('player_id', drop = True, inplace = True) 
         # this was 'id' before but i dont want id
         
@@ -105,6 +108,7 @@ def getStats():
                     print(player.name)
     
     season_df = season_df[cols]
+    career_df = career_df[careerCols]
     season2021 = season_df[season_df['year'] == '2021']
     season2021 = season2021.sort_values(by='name',ascending=True)
     

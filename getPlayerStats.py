@@ -3,7 +3,7 @@ from sportsipy.nba.roster import Player
 from sportsipy.nba.roster import Roster
 from datetime import datetime
 import pandas as pd
-from playerDataCols import cols
+from playerDataCols import cols, careerCols
 import gspread
 from nbaSecrets import nbaSeasonFolderId, seasonDashboardURL
 from nbaSecrets import nbaCareerFolderId, careerDashboardURL
@@ -31,6 +31,9 @@ def get_player_df(player):
     player_df['name'] = player.name # name field gets player name
     player_df['year'] = [get_year(ix) for ix in player_df.index] # year field 
     # gets the year of each season pulled
+    player_df['id'] = [player_id + ' ' + year for player_id,
+               year in zip(player_df['player_id'],
+               player_df['year'])]
     player_df.set_index('player_id', drop = True, inplace = True) 
     # this was 'id' before but i dont want id
     
@@ -65,34 +68,34 @@ for year in years:
                                      player_info['year'] != "Career"]
                     player_career = player_info[
                                     player_info['year'] == "Career"]
-                except:
+                except Exception:
                     pass
                 # create season_df if not initialized
                 if not season_df_init:
                     try:
                         season_df = player_seasons
                         season_df_init = 1
-                    except:
+                    except Exception:
                         pass
                 # else concatenate to season_df
                 else:
                     try:
                         season_df = pd.concat([season_df,
                                        player_seasons], axis = 0)
-                    except:
+                    except Exception:
                         pass
                 if not career_df_init:
                     try:
                         career_df = player_career
                         career_df_init = 1
-                    except:
+                    except Exception:
                         pass
                 # else concatenate to career_df
                 else:
                     try:
                         career_df = pd.concat([career_df,
                                        player_career], axis = 0)
-                    except:
+                    except Exception:
                         pass
 
                 # add player to players_collected
@@ -100,6 +103,7 @@ for year in years:
                 print(player.name)
 
 season_df = season_df[cols]
+career_df = career_df[cols]
 season2021 = season_df[season_df['year'] == '2021']
 season2021 = season2021.sort_values(by='name',ascending=True)
 
